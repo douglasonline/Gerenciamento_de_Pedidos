@@ -1,0 +1,52 @@
+<configuration>
+    <!-- Configuração para salvar os logs da classe ProductController em um arquivo -->
+    <appender name="PRODUCT_FILE" class="ch.qos.logback.core.FileAppender">
+        <file>logs/product_controller.log</file>
+        <encoder>
+            <pattern>%date{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Configuração para salvar os logs da classe PurchaseOrderController em um arquivo -->
+    <appender name="PURCHASE_ORDER_FILE" class="ch.qos.logback.core.FileAppender">
+        <file>logs/purchase_order_controller.log</file>
+        <encoder>
+            <pattern>%date{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Configuração para salvar os logs da classe UserController em um arquivo -->
+    <appender name="USER_FILE" class="ch.qos.logback.core.FileAppender">
+        <file>logs/user_controller.log</file>
+        <encoder>
+            <pattern>%date{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Definindo o nível de log para a classe ProductController -->
+    <logger name="com.example.order_management.controller.ProductController" level="INFO">
+        <appender-ref ref="PRODUCT_FILE" />
+    </logger>
+
+    <!-- Definindo o nível de log para a classe PurchaseOrderController -->
+    <logger name="com.example.order_management.controller.PurchaseOrderController" level="INFO">
+        <appender-ref ref="PURCHASE_ORDER_FILE" />
+    </logger>
+
+    <!-- Definindo o nível de log para a classe UserController -->
+    <logger name="com.example.order_management.controller.UserController" level="INFO">
+        <appender-ref ref="USER_FILE" />
+    </logger>
+
+    <!-- Configuração para manter os logs de nível INFO das outras classes no console -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%date{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Definindo o nível de log para o root logger -->
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+    </root>
+</configuration>

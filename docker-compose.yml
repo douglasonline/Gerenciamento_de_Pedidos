@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres-container
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+    ports:
+      - "5432:5432"
+
+  order_management:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: order_management-container
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 1234
+      SERVER_PORT: 8080
+      SPRING_APPLICATION_NAME: order_management
+      ORDER_MANAGEMENT_DATASOURCE_URL: jdbc:postgresql://postgres:5432/order_management
+      ORDER_MANAGEMENT_DATASOURCE_USERNAME: postgres
+      ORDER_MANAGEMENT_DATASOURCE_PASSWORD: 1234
+      RSA_PRIVATE_KEY: classpath:certs/private-keyy.pem
+      RSA_PUBLIC_KEY: classpath:certs/public-key.pem
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.PostgreSQLDialect
+      SPRING_JPA_SHOW_SQL: true
