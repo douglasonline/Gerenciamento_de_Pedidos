@@ -54,8 +54,7 @@ public class ProductController {
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(@PathVariable String id, @RequestBody Product product) {
         try {
-            UUID uuid = UUID.fromString(id);
-            Product updatedProduct = productService.update(uuid, product);
+            Product updatedProduct = productService.update(UUID.fromString(id), product);
             LOGGER.info("ATUALIZANDO PRODUTO: " + updatedProduct);
             return ResponseEntity.ok(updatedProduct);
         } catch (ProductNotFoundException exception) {
@@ -74,8 +73,7 @@ public class ProductController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteById(@PathVariable String id) {
         try {
-            UUID uuid = UUID.fromString(id);
-            productService.deleteById(uuid);
+            productService.deleteById(UUID.fromString(id));
             return ResponseEntity.status(HttpStatus.OK).body(Map.of("Mensagem", "Produto com o id " + id + " excluído com sucesso!"));
         } catch (ProductNotFoundException exception) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("Mensagem", "Produto não encontrado"));
@@ -94,8 +92,7 @@ public class ProductController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable String id) {
         try {
-            UUID uuid = UUID.fromString(id);
-            Product product = productService.getById(uuid);
+            Product product = productService.getById(UUID.fromString(id));
             LOGGER.info("OBTER PRODUTO POR ID: " + id);
             return ResponseEntity.ok(product);
         } catch (ProductNotFoundException ex) {
@@ -136,8 +133,7 @@ public class ProductController {
     @PutMapping("/updatePagination/{id}")
     public ResponseEntity<?> updatePagination(@PathVariable String id, @RequestBody Product product, Pageable pageable) {
         try {
-            UUID uuid = UUID.fromString(id);
-            Product existingProduct = productService.getById(uuid);
+            Product existingProduct = productService.getById(UUID.fromString(id));
             Page<Product> updatedPage = productService.updatePagination(existingProduct.getId(), product, pageable);
             LOGGER.info("ATUALIZANDO PRODUTO COM PAGINAÇÃO: " + updatedPage.getContent());
             return ResponseEntity.ok(updatedPage);
@@ -157,8 +153,7 @@ public class ProductController {
     @DeleteMapping("/deletePagination/{id}")
     public ResponseEntity<?> deleteByIdPagination(@PathVariable String id, Pageable pageable) {
         try {
-            UUID uuid = UUID.fromString(id);
-            Product product = productService.getById(uuid);
+            Product product = productService.getById(UUID.fromString(id));
             Page<Product> deletedProductPage = productService.deleteByIdPagination(product.getId(), pageable);
             LOGGER.info("PRODUTO COM O ID " + product.getId() + " EXCLUÍDO COM SUCESSO NA PAGINAÇÃO!");
             return ResponseEntity.status(HttpStatus.OK).body(Map.of("Mensagem", "Produto com o id " + product.getId() + " excluído com sucesso!", "Produto", deletedProductPage));
@@ -178,8 +173,7 @@ public class ProductController {
     @GetMapping("/pagination/{id}")
     public ResponseEntity<?> getByIdPagination(@PathVariable String id, Pageable pageable) {
         try {
-            UUID uuid = UUID.fromString(id);
-            Page<Product> product = productService.getByIdPagination(uuid, pageable);
+            Page<Product> product = productService.getByIdPagination(UUID.fromString(id), pageable);
             LOGGER.info("OBTER PRODUTO POR ID COM PAGINAÇÃO: " + id);
             return ResponseEntity.ok(product);
         } catch (ProductNotFoundException ex) {

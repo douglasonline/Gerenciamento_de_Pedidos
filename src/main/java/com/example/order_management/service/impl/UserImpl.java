@@ -4,6 +4,7 @@ import com.example.order_management.model.User;
 import com.example.order_management.model.exception.UnauthorizedException;
 import com.example.order_management.repository.UserRepository;
 import com.example.order_management.service.UserService;
+import io.micrometer.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,6 +18,7 @@ import java.time.temporal.ChronoUnit;
 
 import java.time.Instant;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,7 +41,10 @@ public class UserImpl implements UserService {
     @Override
     public String generateToken(String email, String password) {
 
-        if (email == null || password == null || email.isEmpty() || password.isEmpty()) {
+        Optional<String> optionalEmail = Optional.ofNullable(email);
+        Optional<String> optionalPassword = Optional.ofNullable(password);
+
+        if (optionalEmail.isEmpty() || optionalPassword.isEmpty() || optionalEmail.get().isEmpty() || optionalPassword.get().isEmpty()) {
             throw new IllegalArgumentException("O email e a senha são obrigatórios.");
         }
 
@@ -79,8 +84,16 @@ public class UserImpl implements UserService {
     @Override
     public User createUser(User user) {
 
-        if (user.getUsername() == null || user.getPassword() == null || user.getEmail() == null) {
-            throw new IllegalArgumentException("Todos os campos (username, password e email) são obrigatórios.");
+        if (StringUtils.isEmpty(user.getUsername())) {
+            throw new IllegalArgumentException("O campo 'username' não pode estar vazio.");
+        }
+
+        if (StringUtils.isEmpty(user.getPassword())) {
+            throw new IllegalArgumentException("O campo 'password' não pode estar vazio.");
+        }
+
+        if (StringUtils.isEmpty(user.getEmail())) {
+            throw new IllegalArgumentException("O campo 'email' não pode estar vazio.");
         }
 
         if (userRepository.findByEmail(user.getEmail()).isPresent()) {
@@ -112,9 +125,10 @@ public class UserImpl implements UserService {
     @Override
     public boolean isUserLoggedIn(String token) {
         try {
-            Jwt jwt = jwtDecoder.decode(token);
-            Instant expiration = jwt.getExpiresAt();
-            return expiration != null && expiration.isAfter(Instant.now());
+            Optional<Jwt> optionalJwt = Optional.ofNullable(jwtDecoder.decode(token));
+            Optional<Instant> expiration = optionalJwt.map(Jwt::getExpiresAt);
+
+            return expiration.isPresent() && expiration.get().isAfter(Instant.now());
         } catch (Exception e) {
             return false;
         }

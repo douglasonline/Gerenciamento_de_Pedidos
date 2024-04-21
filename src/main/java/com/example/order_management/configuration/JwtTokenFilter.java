@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 
 public class JwtTokenFilter extends OncePerRequestFilter {
 
@@ -46,9 +47,9 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             return;
         }
 
-        String token = request.getHeader("Authorization");
+        Optional<String> optionalToken = Optional.ofNullable(request.getHeader("Authorization"));
 
-        if (token == null || !token.startsWith("Bearer ")) {
+        if (optionalToken.isEmpty() || !optionalToken.get().startsWith("Bearer ")) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.setCharacterEncoding(StandardCharsets.UTF_8.name());
             response.getWriter().write("Token JWT não fornecido");
@@ -57,7 +58,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         }
 
         try {
-            String jwtToken = token.substring(7);
+            String jwtToken = optionalToken.get().substring(7);
 
             Jwt jwt = jwtDecoder.decode(jwtToken);
 

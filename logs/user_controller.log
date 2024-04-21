@@ -1,0 +1,14 @@
+2024-04-21 19:34:38 [http-nio-8080-exec-1] ERROR c.e.o.controller.UserController - Erro ao criar usuário: Endereço de email já está em uso.
+2024-04-21 19:34:54 [http-nio-8080-exec-4] ERROR c.e.o.controller.UserController - Erro ao criar usuário: Endereço de email já está em uso.
+2024-04-21 19:39:18 [http-nio-8080-exec-1] ERROR c.e.o.controller.UserController - Erro ao criar usuário: Endereço de email já está em uso.
+2024-04-21 19:43:32 [http-nio-8080-exec-2] ERROR c.e.o.controller.UserController - Erro ao criar usuário: Endereço de email já está em uso.
+2024-04-21 19:45:08 [http-nio-8080-exec-1] ERROR c.e.o.controller.UserController - Erro ao criar usuário: Endereço de email já está em uso.
+2024-04-21 19:47:43 [http-nio-8080-exec-2] ERROR c.e.o.controller.UserController - Erro ao criar usuário: Endereço de email já está em uso.
+2024-04-21 19:48:48 [http-nio-8080-exec-3] ERROR c.e.o.controller.UserController - Erro ao criar usuário: Endereço de email já está em uso.
+2024-04-21 19:52:48 [http-nio-8080-exec-2] ERROR c.e.o.controller.UserController - Erro ao criar usuário: Endereço de email já está em uso.
+2024-04-21 19:55:08 [http-nio-8080-exec-1] ERROR c.e.o.controller.UserController - Erro ao criar usuário: O campo 'username' não pode estar vazio.
+2024-04-21 19:55:42 [http-nio-8080-exec-3] ERROR c.e.o.controller.UserController - Erro ao criar usuário: O campo 'password' não pode estar vazio.
+2024-04-21 19:56:05 [http-nio-8080-exec-6] ERROR c.e.o.controller.UserController - Erro ao criar usuário: Endereço de email já está em uso.
+2024-04-21 19:57:08 [http-nio-8080-exec-3] ERROR c.e.o.controller.UserController - Erro ao criar usuário: O campo 'password' não pode estar vazio.
+2024-04-21 19:57:18 [http-nio-8080-exec-6] ERROR c.e.o.controller.UserController - Erro ao gerar token: O email e a senha são obrigatórios.
+2024-04-21 19:57:39 [http-nio-8080-exec-8] ERROR c.e.o.controller.UserController - Erro ao gerar token: O email e a senha são obrigatórios.

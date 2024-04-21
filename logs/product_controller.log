@@ -48,3 +48,17 @@
 2024-04-20 18:06:31 [http-nio-8080-exec-5] INFO  c.e.o.controller.ProductController - OBTER TODOS OS PRODUTOS: [{id=2002ae43-925a-4668-a1d5-e3b5f5b60e09, name='Mineiro 500 ml', price=6.00, category='bebida'}]
 2024-04-20 18:08:25 [http-nio-8080-exec-6] INFO  c.e.o.controller.ProductController - CRIANDO PRODUTO: {id=6792bb29-dced-408c-84cd-4197f9b73997, name='Mineiro 2 litros', price=10, category='bebida'}
 2024-04-20 18:08:32 [http-nio-8080-exec-7] INFO  c.e.o.controller.ProductController - OBTER TODOS OS PRODUTOS: [{id=2002ae43-925a-4668-a1d5-e3b5f5b60e09, name='Mineiro 500 ml', price=6.00, category='bebida'}, {id=6792bb29-dced-408c-84cd-4197f9b73997, name='Mineiro 2 litros', price=10.00, category='bebida'}]
+2024-04-21 17:31:15 [http-nio-8080-exec-4] ERROR c.e.o.controller.ProductController - O ID do produto fornecido é inválido.
+2024-04-21 19:05:31 [http-nio-8080-exec-3] INFO  c.e.o.controller.ProductController - CRIANDO PRODUTO: {id=20d8c0d8-7332-4b62-a21c-4f3ad203f976, name='Mineiro 3 litros', price=15, category='bebida'}
+2024-04-21 19:05:48 [http-nio-8080-exec-4] ERROR c.e.o.controller.ProductController - Erro de validação: O campo 'price' deve ser um valor válido maior que zero.
+2024-04-21 19:06:30 [http-nio-8080-exec-5] INFO  c.e.o.controller.ProductController - CRIANDO PRODUTO: {id=a4bba775-c5e9-411b-856e-db6ff24d4540, name='Mineiro 2,5 litros', price=12, category='bebida'}
+2024-04-21 19:13:04 [http-nio-8080-exec-2] ERROR c.e.o.controller.ProductController - Erro de validação: O campo 'price' deve ser um valor válido maior que zero.
+2024-04-21 19:13:47 [http-nio-8080-exec-3] INFO  c.e.o.controller.ProductController - CRIANDO PRODUTO: {id=85fd0b74-115d-417e-b50d-2affe7eed6b2, name='Mineiro 2,5 litros', price=1, category='bebida'}
+2024-04-21 19:14:01 [http-nio-8080-exec-5] INFO  c.e.o.controller.ProductController - CRIANDO PRODUTO: {id=786ea93c-9e9e-485b-a22c-eb0a7cafbae0, name='Mineiro 2,5 litros', price=32, category='bebida'}
+2024-04-21 20:33:39 [http-nio-8080-exec-1] ERROR c.e.o.controller.ProductController - Erro de validação: O campo 'name' deve ser preenchido.
+2024-04-21 20:33:45 [http-nio-8080-exec-4] ERROR c.e.o.controller.ProductController - Erro de validação: O campo 'name' deve ser preenchido.
+2024-04-21 20:34:27 [http-nio-8080-exec-6] INFO  c.e.o.controller.ProductController - CRIANDO PRODUTO: {id=310ee6c3-bf22-4805-bc76-e2d4ef8297bf, name='Coca-Cola 2 Litros', price=11, category='bebida'}
+2024-04-21 20:34:52 [http-nio-8080-exec-9] ERROR c.e.o.controller.ProductController - Erro de validação: O campo 'price' deve ser um valor válido maior que zero.
+2024-04-21 20:35:03 [http-nio-8080-exec-2] ERROR c.e.o.controller.ProductController - Erro de validação: O campo 'price' deve ser um valor válido maior que zero.
+2024-04-21 20:35:08 [http-nio-8080-exec-3] ERROR c.e.o.controller.ProductController - Erro de validação: O campo 'price' deve ser um valor válido maior que zero.
+2024-04-21 20:35:24 [http-nio-8080-exec-5] INFO  c.e.o.controller.ProductController - CRIANDO PRODUTO: {id=81006035-8b09-4a73-9b84-faedf65c8d76, name='Coca-Cola 2 Litros', price=11, category='bebida'}

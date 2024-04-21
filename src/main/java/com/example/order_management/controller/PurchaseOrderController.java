@@ -61,8 +61,7 @@ public class PurchaseOrderController {
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(@PathVariable String id, @RequestBody PurchaseOrder purchaseOrder, @RequestHeader("Authorization") String token) {
         try {
-            UUID uuid = UUID.fromString(id);
-            PurchaseOrder updatedPurchaseOrder = purchaseOrderService.update(uuid, purchaseOrder, token.replace("Bearer ", ""));
+            PurchaseOrder updatedPurchaseOrder = purchaseOrderService.update(UUID.fromString(id), purchaseOrder, token.replace("Bearer ", ""));
             LOGGER.info("ATUALIZANDO PEDIDO: " + updatedPurchaseOrder);
             return ResponseEntity.ok(updatedPurchaseOrder);
         } catch (PurchaseOrderNotFoundException exception) {
@@ -84,8 +83,7 @@ public class PurchaseOrderController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteById(@PathVariable String id) {
         try {
-            UUID uuid = UUID.fromString(id);
-            PurchaseOrder purchaseOrder = purchaseOrderService.getById(uuid);
+            PurchaseOrder purchaseOrder = purchaseOrderService.getById(UUID.fromString(id));
             purchaseOrderService.deleteById(purchaseOrder.getId());
             LOGGER.info("PEDIDO COM O ID " + id + " EXCLUÍDO COM SUCESSO!");
             return ResponseEntity.status(HttpStatus.OK).body(Map.of("Mensagem", "Pedido com o id " + id + " excluido com sucesso!"));
@@ -105,8 +103,7 @@ public class PurchaseOrderController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable String id) {
         try {
-            UUID uuid = UUID.fromString(id);
-            PurchaseOrder purchaseOrder = purchaseOrderService.getById(uuid);
+            PurchaseOrder purchaseOrder = purchaseOrderService.getById(UUID.fromString(id));
             LOGGER.info("OBTER PEDIDO POR ID: " + id);
             return ResponseEntity.ok(purchaseOrder);
         } catch (PurchaseOrderNotFoundException ex) {
@@ -147,8 +144,7 @@ public class PurchaseOrderController {
     @PutMapping("/updatePagination/{id}")
     public ResponseEntity<?> updatePagination(@PathVariable String id, @RequestBody PurchaseOrder purchaseOrder, Pageable pageable, @RequestHeader("Authorization") String token) {
         try {
-            UUID uuid = UUID.fromString(id);
-            Page<PurchaseOrder> updatedPage = purchaseOrderService.updatePagination(uuid, purchaseOrder, pageable, token.replace("Bearer ", ""));
+            Page<PurchaseOrder> updatedPage = purchaseOrderService.updatePagination(UUID.fromString(id), purchaseOrder, pageable, token.replace("Bearer ", ""));
             LOGGER.info("ATUALIZANDO PEDIDO COM PAGINAÇÃO: " + updatedPage.getContent());
             return ResponseEntity.ok(updatedPage);
         } catch (PurchaseOrderNotFoundException exception) {
@@ -166,12 +162,10 @@ public class PurchaseOrderController {
         }
     }
 
-
     @DeleteMapping("/deletePagination/{id}")
     public ResponseEntity<?> deleteByIdPagination(@PathVariable String id, Pageable pageable) {
         try {
-            UUID uuid = UUID.fromString(id);
-            PurchaseOrder purchaseOrder = purchaseOrderService.getById(uuid);
+            PurchaseOrder purchaseOrder = purchaseOrderService.getById(UUID.fromString(id));
             Page<PurchaseOrder> deletedpurchaseOrderPage = purchaseOrderService.deleteByIdPagination(purchaseOrder.getId(), pageable);
             LOGGER.info("PEDIDO COM O ID " + purchaseOrder.getId() + " EXCLUÍDO COM SUCESSO NA PAGINAÇÃO!");
             return ResponseEntity.status(HttpStatus.OK).body(Map.of("Mensagem", "Pedido com o id " + purchaseOrder.getId() + " excluído com sucesso!", "Pedido", deletedpurchaseOrderPage));
@@ -191,8 +185,7 @@ public class PurchaseOrderController {
     @GetMapping("/pagination/{id}")
     public ResponseEntity<?> getByIdPagination(@PathVariable String id, Pageable pageable) {
         try {
-            UUID uuid = UUID.fromString(id);
-            Page<PurchaseOrder> purchaseOrders = purchaseOrderService.getByIdPagination(uuid, pageable);
+            Page<PurchaseOrder> purchaseOrders = purchaseOrderService.getByIdPagination(UUID.fromString(id), pageable);
             LOGGER.info("OBTER PEDIDO POR ID COM PAGINAÇÃO: " + id);
             return ResponseEntity.ok(purchaseOrders);
         } catch (PurchaseOrderNotFoundException ex) {

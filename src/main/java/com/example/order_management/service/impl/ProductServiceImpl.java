@@ -41,7 +41,8 @@ public class ProductServiceImpl implements ProductService {
             throw new IllegalArgumentException("O campo 'name' deve ser preenchido.");
         }
 
-        if (product.getPrice() == null || product.getPrice().compareTo(BigDecimal.ZERO) <= 0) {
+        Optional<BigDecimal> optionalPrice = Optional.ofNullable(product.getPrice());
+        if (optionalPrice.isEmpty() || optionalPrice.get().compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException("O campo 'price' deve ser um valor válido maior que zero.");
         }
 
@@ -50,12 +51,10 @@ public class ProductServiceImpl implements ProductService {
         }
 
         return productRepository.save(product);
-
     }
 
     @Override
     public Product update(UUID id, Product product) {
-
         try {
             Product existingProduct = getById(id);
 
@@ -63,7 +62,8 @@ public class ProductServiceImpl implements ProductService {
                 throw new IllegalArgumentException("O campo 'name' deve ser preenchido.");
             }
 
-            if (product.getPrice() == null || product.getPrice().compareTo(BigDecimal.ZERO) <= 0) {
+            Optional<BigDecimal> optionalPrice = Optional.ofNullable(product.getPrice());
+            if (optionalPrice.isEmpty() || optionalPrice.get().compareTo(BigDecimal.ZERO) <= 0) {
                 throw new IllegalArgumentException("O campo 'price' deve ser um valor válido maior que zero.");
             }
 
@@ -77,7 +77,6 @@ public class ProductServiceImpl implements ProductService {
             throw new IllegalArgumentException("Produto não encontrado");
         }
     }
-
 
     @Override
     public void deleteById(UUID id) {
@@ -106,12 +105,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Page<Product> createPagination(Product product, Pageable pageable) {
-
         if (StringUtils.isEmpty(product.getName())) {
             throw new IllegalArgumentException("O campo 'name' deve ser preenchido.");
         }
 
-        if (product.getPrice() == null || product.getPrice().compareTo(BigDecimal.ZERO) <= 0) {
+        Optional<BigDecimal> optionalPrice = Optional.ofNullable(product.getPrice());
+        if (optionalPrice.isEmpty() || optionalPrice.get().compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException("O campo 'price' deve ser um valor válido maior que zero.");
         }
 
@@ -126,7 +125,6 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Page<Product> updatePagination(UUID id, Product product, Pageable pageable) {
-
         try {
             Product existingProduct = getById(id);
 
@@ -134,7 +132,8 @@ public class ProductServiceImpl implements ProductService {
                 throw new IllegalArgumentException("O campo 'name' deve ser preenchido.");
             }
 
-            if (product.getPrice() == null || product.getPrice().compareTo(BigDecimal.ZERO) <= 0) {
+            Optional<BigDecimal> optionalPrice = Optional.ofNullable(product.getPrice());
+            if (optionalPrice.isEmpty() || optionalPrice.get().compareTo(BigDecimal.ZERO) <= 0) {
                 throw new IllegalArgumentException("O campo 'price' deve ser um valor válido maior que zero.");
             }
 
@@ -150,7 +149,6 @@ public class ProductServiceImpl implements ProductService {
         } catch (ProductNotFoundException e) {
             throw new IllegalArgumentException("Produto não encontrado");
         }
-
     }
 
     @Override
