@@ -30,26 +30,13 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> getAll() {
 
-      return productRepository.findAll();
+        return productRepository.findAll();
 
     }
 
     @Override
     public Product create(Product product) {
-
-        if (StringUtils.isEmpty(product.getName())) {
-            throw new IllegalArgumentException("O campo 'name' deve ser preenchido.");
-        }
-
-        Optional<BigDecimal> optionalPrice = Optional.ofNullable(product.getPrice());
-        if (optionalPrice.isEmpty() || optionalPrice.get().compareTo(BigDecimal.ZERO) <= 0) {
-            throw new IllegalArgumentException("O campo 'price' deve ser um valor válido maior que zero.");
-        }
-
-        if (StringUtils.isEmpty(product.getCategory())) {
-            throw new IllegalArgumentException("O campo 'category' deve ser preenchido.");
-        }
-
+        ProductValidator.validateProduct(product);
         return productRepository.save(product);
     }
 
@@ -57,20 +44,7 @@ public class ProductServiceImpl implements ProductService {
     public Product update(UUID id, Product product) {
         try {
             Product existingProduct = getById(id);
-
-            if (StringUtils.isEmpty(product.getName())) {
-                throw new IllegalArgumentException("O campo 'name' deve ser preenchido.");
-            }
-
-            Optional<BigDecimal> optionalPrice = Optional.ofNullable(product.getPrice());
-            if (optionalPrice.isEmpty() || optionalPrice.get().compareTo(BigDecimal.ZERO) <= 0) {
-                throw new IllegalArgumentException("O campo 'price' deve ser um valor válido maior que zero.");
-            }
-
-            if (StringUtils.isEmpty(product.getCategory())) {
-                throw new IllegalArgumentException("O campo 'category' deve ser preenchido.");
-            }
-
+            ProductValidator.validateProduct(product);
             product.setId(existingProduct.getId());
             return productRepository.save(product);
         } catch (ProductNotFoundException e) {
@@ -105,19 +79,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Page<Product> createPagination(Product product, Pageable pageable) {
-        if (StringUtils.isEmpty(product.getName())) {
-            throw new IllegalArgumentException("O campo 'name' deve ser preenchido.");
-        }
-
-        Optional<BigDecimal> optionalPrice = Optional.ofNullable(product.getPrice());
-        if (optionalPrice.isEmpty() || optionalPrice.get().compareTo(BigDecimal.ZERO) <= 0) {
-            throw new IllegalArgumentException("O campo 'price' deve ser um valor válido maior que zero.");
-        }
-
-        if (StringUtils.isEmpty(product.getCategory())) {
-            throw new IllegalArgumentException("O campo 'category' deve ser preenchido.");
-        }
-
+        ProductValidator.validateProduct(product);
         Product savedProduct = productRepository.save(product);
         List<Product> productList = Collections.singletonList(savedProduct);
         return new PageImpl<>(productList, pageable, 1);
@@ -127,20 +89,7 @@ public class ProductServiceImpl implements ProductService {
     public Page<Product> updatePagination(UUID id, Product product, Pageable pageable) {
         try {
             Product existingProduct = getById(id);
-
-            if (StringUtils.isEmpty(product.getName())) {
-                throw new IllegalArgumentException("O campo 'name' deve ser preenchido.");
-            }
-
-            Optional<BigDecimal> optionalPrice = Optional.ofNullable(product.getPrice());
-            if (optionalPrice.isEmpty() || optionalPrice.get().compareTo(BigDecimal.ZERO) <= 0) {
-                throw new IllegalArgumentException("O campo 'price' deve ser um valor válido maior que zero.");
-            }
-
-            if (StringUtils.isEmpty(product.getCategory())) {
-                throw new IllegalArgumentException("O campo 'category' deve ser preenchido.");
-            }
-
+            ProductValidator.validateProduct(product);
             product.setId(existingProduct.getId());
             Product savedProduct = productRepository.save(product);
             List<Product> productList = Collections.singletonList(savedProduct);
