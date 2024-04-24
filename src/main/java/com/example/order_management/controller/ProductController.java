@@ -2,6 +2,7 @@ package com.example.order_management.controller;
 
 import com.example.order_management.model.Product;
 import com.example.order_management.model.exception.ProductNotFoundException;
+import com.example.order_management.model.exception.ProductReferencedByOrdersException;
 import com.example.order_management.model.exception.UnauthorizedException;
 import com.example.order_management.service.ProductService;
 import io.micrometer.common.util.StringUtils;
@@ -77,6 +78,9 @@ public class ProductController {
             return ResponseEntity.status(HttpStatus.OK).body(Map.of("Mensagem", "Produto com o id " + id + " excluído com sucesso!"));
         } catch (ProductNotFoundException exception) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("Mensagem", "Produto não encontrado"));
+        } catch (ProductReferencedByOrdersException ex) {
+            LOGGER.error("Não é possível excluir o produto porque ele está sendo referenciado por pedidos existentes.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("Mensagem", ex.getMessage()));
         } catch (IllegalArgumentException e) {
             if (e.getMessage().startsWith("Invalid UUID string")) {
                 LOGGER.error("O ID do produto fornecido é inválido.");
@@ -153,12 +157,14 @@ public class ProductController {
     @DeleteMapping("/deletePagination/{id}")
     public ResponseEntity<?> deleteByIdPagination(@PathVariable String id, Pageable pageable) {
         try {
-            Product product = productService.getById(UUID.fromString(id));
-            Page<Product> deletedProductPage = productService.deleteByIdPagination(product.getId(), pageable);
-            LOGGER.info("PRODUTO COM O ID " + product.getId() + " EXCLUÍDO COM SUCESSO NA PAGINAÇÃO!");
-            return ResponseEntity.status(HttpStatus.OK).body(Map.of("Mensagem", "Produto com o id " + product.getId() + " excluído com sucesso!", "Produto", deletedProductPage));
+            Page<Product> deletedProductPage = productService.deleteByIdPagination(UUID.fromString(id), pageable);
+            LOGGER.info("PRODUTO COM O ID " + id + " EXCLUÍDO COM SUCESSO NA PAGINAÇÃO!");
+            return ResponseEntity.status(HttpStatus.OK).body(Map.of("Mensagem", "Produto com o id " + id + " excluído com sucesso!", "Produto", deletedProductPage));
         } catch (ProductNotFoundException exception) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("Mensagem", "Produto não encontrado"));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("Mensagem", exception.getMessage()));
+        } catch (ProductReferencedByOrdersException ex) {
+            LOGGER.error("Não é possível excluir o produto porque ele está sendo referenciado por pedidos existentes.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("Mensagem", ex.getMessage()));
         } catch (IllegalArgumentException e) {
             if (e.getMessage().startsWith("Invalid UUID string")) {
                 LOGGER.error("O ID do produto fornecido é inválido.");

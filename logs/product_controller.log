@@ -83,3 +83,4 @@
 2024-04-22 00:07:48 [http-nio-8080-exec-3] INFO  c.e.o.controller.ProductController - ATUALIZANDO PRODUTO: {id=8d80f5b4-f9dd-4938-943e-f1644a747e31, name='Coca-Cola 2 Litros', price=11, category='bebida'}
 2024-04-22 00:07:54 [http-nio-8080-exec-4] INFO  c.e.o.controller.ProductController - OBTER TODOS OS PRODUTOS: [{id=97a15dc6-e7a9-4806-90e9-3b48f765dad2, name='', price=11.00, category='bebida'}, {id=128cd7d8-2d46-48ca-8bd2-f27c56048c3d, name='dd', price=2.00, category='bebida'}, {id=8d80f5b4-f9dd-4938-943e-f1644a747e31, name='Coca-Cola 2 Litros', price=11.00, category='bebida'}]
 2024-04-22 00:08:25 [http-nio-8080-exec-7] INFO  c.e.o.controller.ProductController - ATUALIZANDO PRODUTO: {id=97a15dc6-e7a9-4806-90e9-3b48f765dad2, name='Coca-Cola 2 Litros', price=11, category='bebida'}
+2024-04-24 16:15:02 [http-nio-8080-exec-2] ERROR c.e.o.controller.ProductController - Não é possível excluir o produto porque ele está sendo referenciado por pedidos existentes.

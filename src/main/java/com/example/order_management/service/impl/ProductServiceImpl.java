@@ -2,11 +2,13 @@ package com.example.order_management.service.impl;
 
 import com.example.order_management.model.Product;
 import com.example.order_management.model.exception.ProductNotFoundException;
+import com.example.order_management.model.exception.ProductReferencedByOrdersException;
 import com.example.order_management.repository.ProductRepository;
 import com.example.order_management.service.ProductService;
 import com.example.order_management.service.UserService;
 import io.micrometer.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -59,6 +61,8 @@ public class ProductServiceImpl implements ProductService {
             productRepository.deleteById(product.getId());
         } catch (ProductNotFoundException exception) {
             throw new ProductNotFoundException("Produto não encontrado");
+        } catch (DataIntegrityViolationException ex) {
+            throw new ProductReferencedByOrdersException("Não é possível excluir o produto porque ele está sendo referenciado por pedidos existentes.");
         }
     }
 
@@ -102,9 +106,15 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Page<Product> deleteByIdPagination(UUID id, Pageable pageable) {
-        Product product = productRepository.findById(id).orElseThrow(ProductNotFoundException::new);
-        productRepository.deleteById(id);
-        return new PageImpl<>(Collections.singletonList(product), pageable, 1);
+        try {
+            Product product = getById(id);
+            productRepository.deleteById(product.getId());
+            return new PageImpl<>(Collections.singletonList(product), pageable, 1);
+        } catch (ProductNotFoundException exception) {
+            throw new ProductNotFoundException("Produto não encontrado");
+        } catch (DataIntegrityViolationException ex) {
+            throw new ProductReferencedByOrdersException("Não é possível excluir o produto porque ele está sendo referenciado por pedidos existentes.");
+        }
     }
 
     @Override
